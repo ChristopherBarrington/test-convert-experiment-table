@@ -1,0 +1,44 @@
+name: Convert proposal.docx
+
+# when a commit includes a proposal.docx file
+on:
+  push:
+    paths:
+      - 'babs/docs/proposal.docx'
+  workflow_dispatch:
+
+# set up environment variables
+env:
+  INPUT_FILE: 'babs/docs/proposal.docx'
+  OUTPUT_FILE: 'babs/docs/proposal.md'
+  OUTPUT_FORMAT: 'gfm'
+
+# define the work to be done
+jobs:
+  convert-experiment-table:
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: checkout the repo
+        uses: actions/checkout@v3
+      - name: check experiment table exists
+        id: target_file_exists
+        uses: andstor/file-existence-action@v1
+        with:
+          files: ${{ env.INPUT_FILE }}
+      - name: run libreoffice
+        uses: ./
+        id: libreoffice
+        if: steps.target_file_exists.outputs.files_exists == 'true'
+        with:
+          command: libreoffice --headless --invisible --convert-to csv ${{ env.INPUT_FILE }}
+      - name: commit converted proposal
+        if: steps.target_file_exists.outputs.files_exists == 'true'
+        run: |
+          git branch --all
+          git remote --verbose
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add --all
+          git commit -m "babs-o-matic converted experiment_table.xlsx"
+          git push origin HEAD:main
