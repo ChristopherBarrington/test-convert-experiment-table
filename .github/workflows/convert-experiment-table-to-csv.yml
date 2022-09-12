@@ -1,17 +1,17 @@
-name: Convert proposal.docx
+name: Convert experiment_table.xlsx
 
-# when a commit includes a proposal.docx file
+# when a commit includes a experiment_table.xlsx file
 on:
   push:
     paths:
-      - 'babs/docs/proposal.docx'
+      - 'babs/docs/experiment_table.xlsx'
   workflow_dispatch:
 
 # set up environment variables
 env:
-  INPUT_FILE: 'babs/docs/proposal.docx'
-  OUTPUT_FILE: 'babs/docs/proposal.md'
-  OUTPUT_FORMAT: 'gfm'
+  INPUT_FILE: 'babs/docs/experiment_table.xlsx'
+  OUTPUT_FILE: 'babs/docs/experiment_table.csv'
+  OUTPUT_FORMAT: 'csv'
 
 # define the work to be done
 jobs:
@@ -31,7 +31,7 @@ jobs:
         id: libreoffice
         if: steps.target_file_exists.outputs.files_exists == 'true'
         with:
-          command: libreoffice --headless --invisible --convert-to csv ${{ env.INPUT_FILE }}
+          command: libreoffice --headless --invisible --convert-to ${{ env.OUTPUT_FORMAT }} ${{ env.INPUT_FILE }}
       - name: commit converted proposal
         if: steps.target_file_exists.outputs.files_exists == 'true'
         run: |
