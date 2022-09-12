@@ -27,7 +27,6 @@ jobs:
         with:
           files: ${{ env.INPUT_FILE }}
       - name: run libreoffice
-        uses: ./
         id: libreoffice
         if: steps.target_file_exists.outputs.files_exists == 'true'
         with:
