@@ -30,7 +30,7 @@ jobs:
       - name: run xlsx2csv
         if: steps.target_file_exists.outputs.files_exists == 'true'
         run: xlsx2csv ${{ env.INPUT_FILE }} ${{ env.OUTPUT_FILE }}
-      - name: commit converted experimetn table
+      - name: commit converted experiment table
         if: steps.target_file_exists.outputs.files_exists == 'true'
         run: |
           git branch --all
