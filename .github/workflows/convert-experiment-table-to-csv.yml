@@ -6,6 +6,7 @@ on:
     paths:
       - 'babs/docs/experiment_table.xlsx'
   workflow_dispatch:
+  workflow_call:
 
 # set up environment variables
 env:
