@@ -11,7 +11,7 @@ on:
 # set up environment variables
 env:
   INPUT_FILE: 'babs/docs/experiment_table.xlsx'
-  OUTPUT_FILE: 'babs/docs/experiment_table.csv'
+  OUTPUT_FILE: 'babs/docs/experiment_table.foobar.csv'
   OUTPUT_FORMAT: 'csv'
 
 # define the work to be done
@@ -41,5 +41,5 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add --all
-          git commit -m "babs-o-matic converted experiment_table.xlsx"
+          git commit -m "babs-o-matic 9000 converted experiment_table.xlsx"
           git push origin HEAD:main
