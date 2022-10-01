@@ -25,6 +25,7 @@ jobs:
         uses: actions/checkout@v3
       - name: check experiment table exists
         uses: andstor/file-existence-action@v1
+        id: target_file_exists
         with:
           files: ${{ env.INPUT_FILE }}
       - name: dumper
