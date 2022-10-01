@@ -12,7 +12,7 @@ on:
 env:
   OUTPUT_FORMAT: 'csv'
   INPUT_FILE: 'babs/docs/experiment_table.xlsx'
-  OUTPUT_FILE: "babs/docs/experiment_table.foobar.${{ env.OUTPUT_FORMAT }}"
+  OUTPUT_FILE: 'babs/docs/experiment_table.foobar.csv'
 
 # define the work to be done
 jobs:
@@ -27,6 +27,7 @@ jobs:
         with:
           files: ${{ env.INPUT_FILE }}
       - name: run xlsx2csv
+        id: converter
         uses: docker://christopherbarrington/xlsx2csv:2022.10.01
         if: steps.target_file_exists.outputs.files_exists == 'true'
         with:
@@ -34,7 +35,7 @@ jobs:
       - name: checker
         run: ls babs/docs
       - name: commit converted experiment table
-        if: steps.target_file_exists.outputs.files_exists == 'true'
+        if: steps.converter.outcome == 'success'
         run: |
           git branch --all
           git remote --verbose
