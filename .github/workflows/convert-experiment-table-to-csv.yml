@@ -33,6 +33,7 @@ jobs:
         with:
           args: ${{ env.INPUT_FILE }} ${{ env.OUTPUT_FILE }}
       - name: checker
+        if: steps.converter.outcome == 'failure'
         run: ls babs/docs
       - name: commit converted experiment table
         if: steps.converter.outcome == 'success'
