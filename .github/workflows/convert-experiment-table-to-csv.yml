@@ -12,7 +12,7 @@ on:
 env:
   OUTPUT_FORMAT: 'csv'
   INPUT_FILE: 'babs/docs/experiment_table.xlsx'
-  OUTPUT_FILE: 'babs/docs/experiment_table.foobar.csv'
+  OUTPUT_FILE: 'babs/docs/experiment_table.foo.csv'
 
 # define the work to be done
 jobs:
