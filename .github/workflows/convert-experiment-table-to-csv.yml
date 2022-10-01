@@ -17,9 +17,6 @@ env:
 jobs:
   convert-experiment-table:
     runs-on: ubuntu-latest
-    container:
-      image: christopherbarrington/xlsx2csv:2022.10.01
-  
     steps:
       - name: checkout the repo
         uses: actions/checkout@v3
@@ -29,10 +26,12 @@ jobs:
         with:
           files: ${{ env.INPUT_FILE }}
       - name: run xlsx2csv
+        uses: docker://christopherbarrington/xlsx2csv:2022.10.01
         if: steps.target_file_exists.outputs.files_exists == 'true'
-        run: |
-          xlsx2csv ${{ env.INPUT_FILE }} ${{ env.OUTPUT_FILE }}
-          ls babs/docs
+        with:
+          args: ${{ env.INPUT_FILE }} ${{ env.OUTPUT_FILE }}
+      - name: checker
+        run: ls babs/docs
       - name: commit converted experiment table
         if: steps.target_file_exists.outputs.files_exists == 'true'
         run: |
